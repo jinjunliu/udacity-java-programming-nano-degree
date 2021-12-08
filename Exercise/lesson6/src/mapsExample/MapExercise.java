@@ -24,5 +24,13 @@ public class MapExercise {
         }
 
         System.out.println(mapOfPeople.get("sally@example.com"));
+
+        for (String email: mapOfPeople.keySet()) {
+            System.out.println(email);
+        }
+
+        for (Person person: mapOfPeople.values()) {
+            System.out.println(person);
+        }
     }
 }
