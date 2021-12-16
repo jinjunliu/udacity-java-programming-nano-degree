@@ -1,0 +1,4 @@
+enum RoomType {
+    SINGLE,
+    DOUBLE
+}
