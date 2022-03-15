@@ -2,7 +2,7 @@ package api;
 
 import model.*;
 import service.*;
-import java.util.*
+import java.util.*;
 
 public class HotelResource {
     public static Customer getCustomer(String email) {
