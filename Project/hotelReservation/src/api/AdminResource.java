@@ -2,7 +2,6 @@ package api;
 
 import model.*;
 import java.util.*;
-import service.*;
 
 public class AdminResource extends HotelResource {
     public static void addRoom(List<IRoom> rooms) {
