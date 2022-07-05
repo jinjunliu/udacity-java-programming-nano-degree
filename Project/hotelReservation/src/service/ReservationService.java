@@ -53,6 +53,24 @@ public class ReservationService {
         return true;
     }
 
+    private Collection<IRoom> recommendRooms(Date checkInDate, Date checkOutDate) {
+        Collection<IRoom> recommendedRooms = new ArrayList<>();
+        // recommend rooms that add seven days to the check in date and check out date
+        for (IRoom room : rooms.values()) {
+            if (isRoomAvailable(room, addDays(checkInDate, 7), addDays(checkOutDate, 7))) {
+                recommendedRooms.add(room);
+            }
+        }
+        return recommendedRooms;
+    }
+
+    private Date addDays(Date checkInDate, int i) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(checkInDate);
+        calendar.add(Calendar.DATE, i);
+        return calendar.getTime();
+    }
+
     public Collection<Reservation> getCustomersReservation(Customer customer) {
         Collection<Reservation> customerReservations = new ArrayList<>();
         for (Reservation reservation : reservations) {
