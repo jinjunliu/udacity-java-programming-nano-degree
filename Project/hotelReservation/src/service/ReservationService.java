@@ -4,18 +4,16 @@ import model.*;
 import java.util.*;
 
 public class ReservationService {
-    private final static List<Map<String, IRoom>> rooms = new ArrayList<>();
+    private final static Map<String, IRoom> rooms = new HashMap<>();
     private final static List<Reservation> reservations = new ArrayList<>();
 
     public void addRoom(IRoom room) {
-        rooms.add(Collections.singletonMap(room.getRoomNumber(), room));
+        rooms.put(room.getRoomNumber(), room);
     }
 
     public IRoom getARoom(String roomId) {
-        for (Map<String, IRoom> roomMap : rooms) {
-            if (roomMap.containsKey(roomId)) {
-                return roomMap.get(roomId);
-            }
+        if (rooms.containsKey(roomId)) {
+            return rooms.get(roomId);
         }
         return null;
     }
@@ -29,11 +27,9 @@ public class ReservationService {
     public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
         Collection<IRoom> availableRooms = new ArrayList<>();
         // room is available when it is not reserved within the date range
-        for (Map<String, IRoom> room : rooms) {
-            for (IRoom roomItem : room.values()) {
-                if (isRoomAvailable(roomItem, checkInDate, checkOutDate)) {
-                    availableRooms.add(roomItem);
-                }
+        for (IRoom room : rooms.values()) {
+            if (isRoomAvailable(room, checkInDate, checkOutDate)) {
+                availableRooms.add(room);
             }
         }
         return availableRooms;
