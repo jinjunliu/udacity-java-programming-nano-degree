@@ -4,28 +4,21 @@ import model.Customer;
 import java.util.*;
 
 public class CustomerService {
-    private static final List<Map<String, Customer>> customers = new ArrayList<>();
+    private static final Map<String, Customer> customers = new HashMap<>();
     public void addCustomer(String email, String firstName, String lastName) {
         Customer customer = new Customer(firstName, lastName, email);
-        Map <String, Customer> customerMap = new HashMap<>();
-        customerMap.put(email, customer);
-        customers.add(customerMap);
+        customers.put(email, customer);
     }
 
     public Customer getCustomer(String customerEmail) {
-        for (Map<String, Customer> customerMap : customers) {
-            if (customerMap.containsKey(customerEmail)) {
-                return customerMap.get(customerEmail);
-            }
+        // if customerEmail is in the keys
+        if (customers.containsKey(customerEmail)) {
+            return customers.get(customerEmail);
         }
         return null;
     }
 
     public Collection<Customer> getAllCustomers() {
-        Collection<Customer> allCustomers = new ArrayList<>();
-        for (Map<String, Customer> customerMap : customers) {
-            allCustomers.addAll(customerMap.values());
-        }
-        return allCustomers;
+        return customers.values();
     }
 }
