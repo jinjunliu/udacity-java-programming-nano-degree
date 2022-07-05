@@ -4,8 +4,8 @@ import model.*;
 import java.util.*;
 
 public class ReservationService {
-    private final static Map<String, IRoom> rooms = new HashMap<>();
-    private final static List<Reservation> reservations = new ArrayList<>();
+    final static Map<String, IRoom> rooms = new HashMap<>();
+    final static List<Reservation> reservations = new ArrayList<>();
 
     public void addRoom(IRoom room) {
         rooms.put(room.getRoomNumber(), room);
@@ -16,6 +16,10 @@ public class ReservationService {
             return rooms.get(roomId);
         }
         return null;
+    }
+
+    public Collection<IRoom> getAllRooms() {
+        return rooms.values();
     }
 
     public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
