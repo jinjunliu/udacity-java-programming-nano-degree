@@ -5,8 +5,8 @@ import service.*;
 import java.util.*;
 
 public class HotelResource {
-    private static final CustomerService customerService = new CustomerService();
-    private static final ReservationService reservationService = new ReservationService();
+    static final CustomerService customerService = new CustomerService();
+    static final ReservationService reservationService = new ReservationService();
     public static Customer getCustomer(String email) {
         return customerService.getCustomer(email);
     }
