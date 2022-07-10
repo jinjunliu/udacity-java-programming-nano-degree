@@ -2,6 +2,8 @@ package api;
 
 import model.*;
 import service.*;
+
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class HotelResource {
@@ -11,7 +13,7 @@ public class HotelResource {
         return customerService.getCustomer(email);
     }
 
-    public static void createACustomer(String email, String firstName, String lastName) {
+    public void createACustomer(String email, String firstName, String lastName) {
         customerService.addCustomer(firstName, lastName, email);
     }
 
@@ -31,5 +33,15 @@ public class HotelResource {
 
     public Collection<IRoom> findARoom(Date checkIn, Date checkOut) {
         return reservationService.findRooms(checkIn, checkOut);
+    }
+
+    public static Date parseDate (String date) {
+        // check date format yyyy-mm-dd
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return sdf.parse(date);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
