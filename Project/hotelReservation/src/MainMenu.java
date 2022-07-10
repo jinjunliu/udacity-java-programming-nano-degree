@@ -3,6 +3,7 @@ import java.util.*;
 
 
 public class MainMenu {
+    AdminResource resource = new AdminResource();
     public static void main(String[] args) {
         System.out.println("""
                 Welcome to hotel reservation application!
@@ -44,34 +45,32 @@ public class MainMenu {
 
     private static void findAndReserveARoom() {
         System.out.println("Please enter your check in date (yyyy-mm-dd):");
-        int menuOption = 0;
         while (true) {
-            while (true) {
-                Scanner scanner = new Scanner(System.in);
-                try {
-                    menuOption = scanner.nextInt();
-                    if (1 <= menuOption && menuOption <= 5) {
-                        System.out.println("You selected menu option " + menuOption);
-                    }
-                    break;
-                } catch (Exception e) {
-                    System.out.println("Please enter a valid number (1-5) for the menu option");
-                }
-            }
-            switch (menuOption) {
-                case 1 -> findARoom();
-                case 2 -> seeAllRooms();
-                case 3 -> seeAllReservations();
-                case 4 -> {
-                    System.out.println("Back to main menu");
-                    return;
-                }
-                case 5 -> {
-                    System.out.println("Thank you for using our application!");
-                    System.exit(0);
-                }
-                default -> System.out.println("Please enter a valid number (1-5) for the menu option");
+            Scanner scanner = new Scanner(System.in);
+            String checkInDate = scanner.nextLine();
+            // to date
+            try {
+                Date checkIn = HotelResource.parseDate(checkInDate);
+                System.out.println("You entered check in date: " + checkIn);
+                break;
+            } catch (Exception e) {
+                System.out.println("Please enter a valid date (yyyy-mm-dd)");
             }
         }
+        System.out.println("Please enter your check out date (yyyy-mm-dd):");
+        while (true) {
+            Scanner scanner = new Scanner(System.in);
+            String checkOutDate = scanner.nextLine();
+            // to date
+            try {
+                Date checkOut = HotelResource.parseDate(checkOutDate);
+                System.out.println("You entered check out date: " + checkOut);
+                break;
+            } catch (Exception e) {
+                System.out.println("Please enter a valid date (yyyy-mm-dd)");
+            }
+        }
+
+
     }
 }
