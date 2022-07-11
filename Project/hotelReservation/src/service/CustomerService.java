@@ -8,6 +8,7 @@ public class CustomerService {
     public void addCustomer(String email, String firstName, String lastName) {
         Customer customer = new Customer(firstName, lastName, email);
         customers.put(email, customer);
+        System.out.println(customer);
     }
 
     public Customer getCustomer(String customerEmail) {
