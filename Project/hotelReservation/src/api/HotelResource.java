@@ -9,12 +9,12 @@ import java.util.*;
 public class HotelResource {
     static final CustomerService customerService = new CustomerService();
     static final ReservationService reservationService = new ReservationService();
-    public static Customer getCustomer(String email) {
+    public Customer getCustomer(String email) {
         return customerService.getCustomer(email);
     }
 
     public void createACustomer(String email, String firstName, String lastName) {
-        customerService.addCustomer(firstName, lastName, email);
+        customerService.addCustomer(email, firstName, lastName);
     }
 
     public IRoom getRoom(String roomNumber) {
@@ -33,6 +33,10 @@ public class HotelResource {
 
     public Collection<IRoom> findARoom(Date checkIn, Date checkOut) {
         return reservationService.findRooms(checkIn, checkOut);
+    }
+
+    public Collection<IRoom> recommendRooms(Date checkIn, Date checkOut) {
+        return reservationService.recommendRooms(checkIn, checkOut);
     }
 
     public static Date parseDate (String date) {
