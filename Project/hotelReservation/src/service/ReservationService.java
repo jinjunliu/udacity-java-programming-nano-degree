@@ -39,15 +39,17 @@ public class ReservationService {
         return availableRooms;
     }
 
+    // reference: https://stackoverflow.com/questions/18938152/check-if-two-date-periods-overlap
+    private boolean isDateRangeOverlap(Date start1, Date end1, Date start2, Date end2) {
+        return !(start1.after(end2) || end1.before(start2));
+    }
+
     private boolean isRoomAvailable(IRoom room, Date checkInDate, Date checkOutDate) {
         for (Reservation reservation : reservations) {
-            if (reservation.getRoom().equals(room) &&
-                reservation.getCheckInDate().before(checkInDate) && reservation.getCheckOutDate().after(checkInDate)) {
-                return false;
-            }
-            if (reservation.getRoom().equals(room) &&
-                reservation.getCheckInDate().before(checkOutDate) && reservation.getCheckOutDate().after(checkOutDate)) {
-                return false;
+            if (reservation.getRoom().getRoomNumber().equals(room.getRoomNumber())) {
+                if (isDateRangeOverlap(reservation.getCheckInDate(), reservation.getCheckOutDate(), checkInDate, checkOutDate)) {
+                    return false;
+                }
             }
         }
         return true;
