@@ -6,4 +6,4 @@ This repo includes my excercises and projects while taking [Udacity's Java Progr
 * Project - this directory includes the three projects: Hotel Reservation Application, Legacy Web Crawler, and UdaSecurity.
 
 ## Running Environment
-All excercises and projects are tested under JDK 17.
+All excercises and projects are tested under JDK 18.
