@@ -53,7 +53,7 @@ public class ReservationService {
         return true;
     }
 
-    private Collection<IRoom> recommendRooms(Date checkInDate, Date checkOutDate) {
+    public Collection<IRoom> recommendRooms(Date checkInDate, Date checkOutDate) {
         Collection<IRoom> recommendedRooms = new ArrayList<>();
         // recommend rooms that add seven days to the check in date and check out date
         for (IRoom room : rooms.values()) {
@@ -82,8 +82,12 @@ public class ReservationService {
     }
 
     public void printAllReservations() {
-        for (Reservation reservation : reservations) {
-            System.out.println(reservation);
+        if (reservations.isEmpty()) {
+            System.out.println("No reservations");
+        } else {
+            for (Reservation reservation : reservations) {
+                System.out.println(reservation.toString());
+            }
         }
     }
 }
