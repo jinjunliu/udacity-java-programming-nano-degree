@@ -12,7 +12,7 @@ public class AdminMenu {
                            1. See all Customers;
                            2. See all Rooms;
                            3. See all Reservations;
-                           4. Add a Room;
+                           4. Add Rooms;
                            5. Back to Main Menu.
                             --------------------------------------
                             """);
@@ -50,6 +50,8 @@ public class AdminMenu {
                 numRooms = scanner.nextInt();
                 if (numRooms > 0) {
                     break;
+                } else if (numRooms == 0) {
+                    return rooms;
                 } else {
                     System.out.println("Please enter a valid number of rooms");
                 }
@@ -58,7 +60,7 @@ public class AdminMenu {
             }
         }
         for (int i = 0; i < numRooms; i++) {
-            System.out.println("Entering room " + (i + 1) + " of " + numRooms + " rooms" + ":");
+            System.out.println("Entering room " + (i + 1) + " of " + numRooms + ":");
 
             System.out.println("Please enter the room number:");
             Scanner scannerRoomNumber = new Scanner(System.in);
