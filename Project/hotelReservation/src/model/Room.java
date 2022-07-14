@@ -3,9 +3,9 @@ package model;
 import java.lang.*;
 
 public class Room implements IRoom {
-    String roomNumber;
-    Double price;
-    RoomType roomType;
+    public final String roomNumber;
+    private Double price;
+    private final RoomType roomType;
 
     public Room(String roomNumber, Double price, RoomType roomType) {
         this.roomNumber = roomNumber;
@@ -36,12 +36,13 @@ public class Room implements IRoom {
         return this.roomType == other.roomType;
     }
 
+    // ref: https://www.baeldung.com/java-hashcode
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 13 * hash + (this.roomNumber != null ? this.roomNumber.hashCode() : 0);
-        hash = 13 * hash + (this.price != null ? this.price.hashCode() : 0);
-        hash = 13 * hash + (this.roomType != null ? this.roomType.hashCode() : 0);
+        int hash = 7;
+        hash = 31 * hash + (this.roomNumber != null ? this.roomNumber.hashCode() : 0);
+        hash = 31 * hash + (this.price != null ? this.price.hashCode() : 0);
+        hash = 31 * hash + (this.roomType != null ? this.roomType.hashCode() : 0);
         return hash;
     }
 
@@ -58,6 +59,10 @@ public class Room implements IRoom {
     @Override
     public RoomType getRoomType() {
         return this.roomType;
+    }
+
+    public void setRoomPrice(Double price) {
+        this.price = price;
     }
 
     @Override
