@@ -4,8 +4,23 @@ import model.*;
 import java.util.*;
 
 public class ReservationService {
-    final static Map<String, IRoom> rooms = new HashMap<>();
-    final static List<Reservation> reservations = new ArrayList<>();
+    // singleton instance
+    // ref: https://www.geeksforgeeks.org/singleton-class-java/
+    private static ReservationService instance = null;
+    public Map<String, IRoom> rooms;
+    public List<Reservation> reservations;
+
+    private ReservationService() {
+        rooms = new HashMap<>();
+        reservations = new ArrayList<>();
+    }
+
+    public static ReservationService ReservationService() {
+        if (instance == null) {
+            instance = new ReservationService();
+        }
+        return instance;
+    }
 
     public void addRoom(IRoom room) {
         rooms.put(room.getRoomNumber(), room);
@@ -66,7 +81,7 @@ public class ReservationService {
         return recommendedRooms;
     }
 
-    private Date addDays(Date checkInDate, int i) {
+    Date addDays(Date checkInDate, int i) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(checkInDate);
         calendar.add(Calendar.DATE, i);
