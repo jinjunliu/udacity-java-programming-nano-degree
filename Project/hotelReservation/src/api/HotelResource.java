@@ -7,8 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class HotelResource {
-    static final CustomerService customerService = new CustomerService();
-    static final ReservationService reservationService = new ReservationService();
+    static final CustomerService customerService = CustomerService.CustomerService();
+    static final ReservationService reservationService = ReservationService.ReservationService();
     public Customer getCustomer(String email) {
         return customerService.getCustomer(email);
     }
