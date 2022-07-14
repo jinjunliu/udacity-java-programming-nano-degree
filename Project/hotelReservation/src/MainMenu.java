@@ -4,7 +4,7 @@ import model.*;
 
 
 public class MainMenu {
-    static AdminResource resource = new AdminResource();
+    final static AdminResource resource = new AdminResource();
     public static void mainMenu() {
         int menuOption = 0;
         while (true) {
@@ -45,7 +45,7 @@ public class MainMenu {
     }
 
     private static String emailInput() {
-        System.out.println("Please enter your email address");
+        System.out.println("Please enter your email address (e.g., name@domain.com):");
         String email = "";
         while (true) {
             Scanner scanner = new Scanner(System.in);
@@ -68,6 +68,8 @@ public class MainMenu {
 
     private static void findAndReserveARoom() {
         String email = emailInput();
+        // email to lowercase
+        email = email.toLowerCase();
         // check if customer exists
         Customer customer = resource.getCustomer(email);
         if (customer == null) {
@@ -82,8 +84,13 @@ public class MainMenu {
                 // to date
                 checkIn = HotelResource.parseDate(checkInDate);
                 if (checkIn != null) {
-                    System.out.println("You entered check in date: " + checkIn);
-                    break;
+                    // check if check in date is in the future
+                    if (checkIn.after(new Date())) {
+                        System.out.println("You entered check in date: " + checkIn);
+                        break;
+                    } else {
+                        System.out.println("Please enter a valid check in date (yyyy-mm-dd) in the future");
+                    }
                 } else {
                     System.out.println("Please enter a valid date (yyyy-mm-dd)");
                 }
@@ -96,8 +103,13 @@ public class MainMenu {
                 // to date
                 checkOut = HotelResource.parseDate(checkOutDate);
                 if (checkOut != null) {
-                    System.out.println("You entered check out date: " + checkOut);
-                    break;
+                    // check if check out date is after check in date
+                    if (checkOut.after(checkIn)) {
+                        System.out.println("You entered check out date: " + checkOut);
+                        break;
+                    } else {
+                        System.out.println("Please enter a valid check out date (yyyy-mm-dd) after check in date");
+                    }
                 } else {
                     System.out.println("Please enter a valid date (yyyy-mm-dd)");
                 }
@@ -127,10 +139,10 @@ public class MainMenu {
                     while (true) {
                         Scanner scanner = new Scanner(System.in);
                         String answer = scanner.nextLine();
-                        if (answer.equals("y")) {
+                        if (answer.equalsIgnoreCase("y")) {
                             ifRecommendRoom = true;
                             break;
-                        } else if (answer.equals("n")) {
+                        } else if (answer.equalsIgnoreCase("n")) {
                             break;
                         } else {
                             System.out.println("Please enter y or n");
@@ -188,6 +200,8 @@ public class MainMenu {
             }
         }
         String email = emailInput();
+        // email to lowercase
+        email = email.toLowerCase();
         // check if customer exists
         Customer customer = resource.getCustomer(email);
         if (customer == null) {
@@ -200,6 +214,8 @@ public class MainMenu {
 
     private static void seeMyReservations() {
         String email = emailInput();
+        // email to lowercase
+        email = email.toLowerCase();
         // check if customer exists
         Customer customer = resource.getCustomer(email);
         if (customer == null) {
