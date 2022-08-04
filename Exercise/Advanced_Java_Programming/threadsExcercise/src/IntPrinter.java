@@ -10,8 +10,6 @@ public final class IntPrinter {
 
         int n = Integer.parseInt(args[0]);
 
-        // TODO: Create a list of n Threads and run them all in parallel with the System.out.println
-        //       statement.
         List<Thread> threads = new ArrayList<>(n);
         for (int i = 0; i < n; i++) {
             int finalI = i;
