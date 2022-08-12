@@ -2,3 +2,4 @@
 target/
 *.iml
 profileData.txt
+.attach_pid*
