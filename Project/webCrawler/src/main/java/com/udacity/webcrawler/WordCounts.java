@@ -27,10 +27,10 @@ final class WordCounts {
    */
   static Map<String, Integer> sort(Map<String, Integer> wordCounts, int popularWordCount) {
 
-return wordCounts.entrySet().stream()
-        .sorted(new WordCountComparator())
-        .limit(popularWordCount)
-        .collect(LinkedHashMap::new, (m, e) -> m.put(e.getKey(), e.getValue()), Map::putAll);
+    return wordCounts.entrySet().stream()
+            .sorted(new WordCountComparator())
+            .limit(popularWordCount)
+            .collect(LinkedHashMap::new, (m, e) -> m.put(e.getKey(), e.getValue()), Map::putAll);
   }
 
   /**
