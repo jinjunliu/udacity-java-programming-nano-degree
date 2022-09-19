@@ -7,9 +7,6 @@ import java.util.PriorityQueue;
 
 /**
  * Utility class that sorts the map of word counts.
- *
- * <p>TODO: Reimplement the sort() method using only the Stream API and lambdas and/or method
- *          references.
  */
 final class WordCounts {
 
@@ -17,9 +14,6 @@ final class WordCounts {
    * Given an unsorted map of word counts, returns a new map whose word counts are sorted according
    * to the provided {@link WordCountComparator}, and includes only the top
    * {@param popluarWordCount} words and counts.
-   *
-   * <p>TODO: Reimplement this method using only the Stream API and lambdas and/or method
-   *          references.
    *
    * @param wordCounts       the unsorted map of word counts.
    * @param popularWordCount the number of popular words to include in the result map.
