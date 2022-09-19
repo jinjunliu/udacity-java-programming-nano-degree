@@ -1,11 +1,11 @@
 package com.udacity.webcrawler.profiler;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -17,25 +17,26 @@ final class ProfilingMethodInterceptor implements InvocationHandler {
     private final Clock clock;
     private final Object delegate;
     private final ProfilingState state;
-    private final ZonedDateTime startTime;
 
-  ProfilingMethodInterceptor(Clock clock, Object delegate, ProfilingState state, ZonedDateTime startTime) {
+  ProfilingMethodInterceptor(Clock clock, Object delegate, ProfilingState state) {
     this.clock = Objects.requireNonNull(clock);
     this.delegate = Objects.requireNonNull(delegate);
     this.state = Objects.requireNonNull(state);
-    this.startTime = Objects.requireNonNull(startTime);
   }
 
   @Override
-  public Object invoke(Object proxy, Method method, Object[] args) {
+  public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
     Object result = null;
+    Instant start = null;
     if (method.isAnnotationPresent(Profiled.class)) {
-      Instant start = clock.instant();
-      try {
-        result = method.invoke(delegate, args);
-      } catch (Exception e) {
-        e.printStackTrace();
-      } finally {
+      start = clock.instant();
+    }
+    try {
+      result = method.invoke(delegate, args);
+    } catch (InvocationTargetException e) {
+      throw e.getTargetException();
+    } finally {
+      if (method.isAnnotationPresent(Profiled.class)) {
         Instant end = clock.instant();
         Duration duration = Duration.between(start, end);
         state.record(delegate.getClass(), method, duration);
