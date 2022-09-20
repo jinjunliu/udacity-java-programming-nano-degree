@@ -11,6 +11,10 @@ Q1. Run the web crawler using the configurations located at src/main/config/writ
 
     Why did the parser take more time when run with ParallelWebCrawler?
 
+    Because in both of these 2 config files, the timeoutSeconds is set as 2. During 2 seconds time, the
+    ParallelWebCrawler is able to visit more pages than the SequentialWebCrawler (in my case, ParallelWebCrawler visited
+    28 pages and SequentialWebCrawler visited 7 pages). Therefore, in parallelism case, the parser has to parse more
+    pages than in sequential case. As a result, the parser took more time when run with ParallelWebCrawler.
 
 Q2. Your manager ran your crawler on her old personal computer, using the configurations from Q1, and she notices that
     the sequential crawler actually outperforms the parallel crawler. She would like to know why.
@@ -18,8 +22,16 @@ Q2. Your manager ran your crawler on her old personal computer, using the config
     (a) Suggest one reason why the sequential web crawler was able to read more web pages than the parallel crawler.
         (Hint: Try setting "parallelism" to 1 in the JSON configs to simulate your manager's computer.)
 
+    I set "parallelism" to 1 in the written_question_1b JSON configs, and it turns out the ParallelWebCrawler visited 5
+    pages, slightly less than SequentialWebCrawler (7 pages). I think the reason is that according to Amdahl's law
+    S=1/(1-p), when p is zero, S = 1, meaning the parallelism is not helpful at all. But the process of creating subtasks
+    and merging results is not free, so the sequential crawler is still faster than the parallel crawler.
+
     (b) Suggest one scenario in which the parallel web crawler will almost certainly perform better than the sequential
         crawler. Why will it perform better?
+
+    I would suggest running the parallel web crawler on a computer with more than 1 CPU cores. Because according to Amdahl's
+    law, when p is larger, S will get larger, meaning the parallelism is more helpful.
 
 
 Q3. Analyze your method profiler through the lens of Aspect Oriented Programming, by answering the following questions:
