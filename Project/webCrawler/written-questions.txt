@@ -31,14 +31,18 @@ Q2. Your manager ran your crawler on her old personal computer, using the config
         crawler. Why will it perform better?
 
     I would suggest running the parallel web crawler on a computer with more than 1 CPU cores. Because according to Amdahl's
-    law, when p is larger, S will get larger, meaning the parallelism is more helpful.
+    law, when p is larger, S will get larger, meaning the parallelism is helpful for speeding up the program.
 
 
 Q3. Analyze your method profiler through the lens of Aspect Oriented Programming, by answering the following questions:
 
     (a) What cross-cutting concern is being addressed by the com.udacity.webcrawler.profiler.Profiler class?
 
+    The cross-cutting concern is profiling, i.e., measuring the time spent on each method.
+
     (b) What are the join points of the Profiler in the web crawler program?
+
+    The @Profiled annotation is the join point.
 
 
 Q4. Identify three (3) different design patterns used in this project, and explain which interfaces, classes, and/or
@@ -47,4 +51,16 @@ Q4. Identify three (3) different design patterns used in this project, and expla
     For each pattern, name one thing about the pattern that you LIKED, and one thing you DISLIKED. If you did not like
     anything, you can name two things you disliked.
 
+    1. Abstract Factory Pattern. The interface PageParserFactory is the abstract factory.
+    One thing I liked abstract factory pattern is that we can hide construction details from clients.
+    One thing I disliked is it may reduce the code readability.
 
+    2. Builder Pattern. The class CrawlerConfigurations uses the builder pattern.
+    One thing I liked builder pattern is that it is easy to add new parameters to the builder.
+    One thing I disliked is that it is easy to forget to add new parameters to the builder.
+
+    3. Dependency Injection Pattern. The class ProfilerImpl, WebCrawlerMain, etc. use dependency injection pattern.
+    One thing I liked dependency injection pattern is that it is easy to create objects. Instead of creating objects
+    yourself, you can just ask the injector to create objects for you. Therefore, it makes easier to test the code.
+    For example, we can simulate behavior of the objects by injecting fake objects.
+    One thing I disliked is that it requires some extra libraries such as Google Guice.
