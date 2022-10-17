@@ -17,3 +17,6 @@ hs_err_pid*
 # .idea directory
 .idea
 *.iml
+
+# tinyJRE
+tinyJRE
