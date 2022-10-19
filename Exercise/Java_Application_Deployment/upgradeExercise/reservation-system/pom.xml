@@ -8,14 +8,19 @@
     <artifactId>reservation-system</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <name>Reservation system</name>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
+    <modules>
+        <module>flightmodule</module>
+        <module>hotelmodule</module>
+        <module>packagemodule</module>
+    </modules>
 
     <build>
         <pluginManagement>
@@ -23,20 +28,6 @@
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.1</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.2.0</version>
-                    <configuration>
-                        <archive>
-                            <manifest>
-                                <addClasspath>true</addClasspath>
-                                <classpathPrefix>lib/</classpathPrefix>
-                                <mainClass>com.udacity.packagesearch.search.Main</mainClass>
-                            </manifest>
-                        </archive>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
