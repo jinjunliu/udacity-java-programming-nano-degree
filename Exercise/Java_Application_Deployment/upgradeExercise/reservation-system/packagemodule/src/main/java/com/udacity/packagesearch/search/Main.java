@@ -1,8 +1,8 @@
-package main.java.com.udacity.packagesearch.search;
+package com.udacity.packagesearch.search;
 
 import com.udacity.hotel.model.Reservation;
-import main.java.com.udacity.packagesearch.search.model.PackageSearch;
-import main.java.com.udacity.packagesearch.search.service.PackageSearchService;
+import com.udacity.packagesearch.search.model.PackageSearch;
+import com.udacity.packagesearch.search.service.PackageSearchService;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;

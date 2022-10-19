@@ -1,10 +1,10 @@
-package main.java.com.udacity.packagesearch.search.service;
+package com.udacity.packagesearch.search.service;
 
 import com.udacity.flight.model.Flight;
 import com.udacity.flight.search.FlightSearchService;
 import com.udacity.hotel.model.Reservation;
 import com.udacity.hotel.search.ReservationSearchService;
-import main.java.com.udacity.packagesearch.search.model.PackageSearch;
+import com.udacity.packagesearch.search.model.PackageSearch;
 
 import java.time.LocalDate;
 import java.util.List;

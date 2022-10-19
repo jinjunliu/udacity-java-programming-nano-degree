@@ -1,4 +1,4 @@
-package main.java.com.udacity.packagesearch.search.model;
+package com.udacity.packagesearch.search.model;
 
 import com.udacity.flight.model.Flight;
 import com.udacity.hotel.model.Reservation;

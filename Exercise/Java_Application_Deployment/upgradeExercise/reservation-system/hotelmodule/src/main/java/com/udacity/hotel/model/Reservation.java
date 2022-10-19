@@ -1,4 +1,4 @@
-package main.java.com.udacity.hotel.model;
+package com.udacity.hotel.model;
 
 import java.time.LocalDate;
 import java.util.Objects;

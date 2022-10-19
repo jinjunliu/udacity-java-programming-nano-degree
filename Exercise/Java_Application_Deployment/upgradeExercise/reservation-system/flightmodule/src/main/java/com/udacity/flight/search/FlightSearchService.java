@@ -1,4 +1,4 @@
-package main.java.com.udacity.flight.search;
+package com.udacity.flight.search;
 
 import com.udacity.flight.model.Flight;
 
