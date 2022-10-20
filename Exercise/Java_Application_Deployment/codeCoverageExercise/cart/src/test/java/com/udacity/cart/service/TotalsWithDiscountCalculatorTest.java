@@ -4,10 +4,7 @@ import com.udacity.cart.model.CartItem;
 import com.udacity.cart.model.CartTotals;
 import com.udacity.cart.model.User;
 import com.udacity.cart.model.UserType;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.RepetitionInfo;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -40,6 +37,12 @@ class TotalsWithDiscountCalculatorTest {
 		assertEquals(100.0 - 20 * repetitionInfo.getCurrentRepetition(), globalUser.getCredit());
 	}
 
+	@Test
+	void getTotalsWithDiscounts_userWithCredit_creditLessThanSubtotal() {
+		TotalsWithDiscountCalculator calculator = new TotalsWithDiscountCalculator(new User("User with a lot of credit", UserType.REGULAR, 15.0));
+		CartTotals totals = calculator.getTotals(List.of(new CartItem("Twenty dollar item", 20.0, 0)));
+		assertEquals(new CartTotals(5.0, 0), totals);
+	}
 
 	@ParameterizedTest
 	@MethodSource("differentUserTypesAndExpectedTotals")
