@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class WorldTimeApiHttpClient {
+public class WorldTimeApiHttpClient implements WorldTimeApiClient{
 	private static final HttpClient client = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build();
 	private final Pattern r = Pattern.compile("/(.*?)\"");
 
