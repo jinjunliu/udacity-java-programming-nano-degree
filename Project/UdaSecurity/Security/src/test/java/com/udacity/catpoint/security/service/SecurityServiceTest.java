@@ -1,14 +1,12 @@
-package com.udacity.catpoint;
-
-
-import org.junit.jupiter.api.Test;
+package com.udacity.catpoint.security.service;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class SecurityServiceTest
 {
     /**
      * Rigorous Test :-)
