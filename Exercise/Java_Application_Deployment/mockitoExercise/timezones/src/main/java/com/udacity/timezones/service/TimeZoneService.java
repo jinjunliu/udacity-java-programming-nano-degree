@@ -1,11 +1,12 @@
 package com.udacity.timezones.service;
 
+import com.udacity.timezones.client.WorldTimeApiClient;
 import com.udacity.timezones.client.WorldTimeApiHttpClient;
 
 public class TimeZoneService {
-	private final WorldTimeApiHttpClient worldTimeApiRestClient;
+	private final WorldTimeApiClient worldTimeApiRestClient;
 
-	public TimeZoneService(WorldTimeApiHttpClient worldTimeApiRestClient) {
+	public TimeZoneService(WorldTimeApiClient worldTimeApiRestClient) {
 		this.worldTimeApiRestClient = worldTimeApiRestClient;
 	}
 
