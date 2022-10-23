@@ -20,3 +20,6 @@ hs_err_pid*
 
 # tinyJRE
 tinyJRE
+
+# target directory
+target
