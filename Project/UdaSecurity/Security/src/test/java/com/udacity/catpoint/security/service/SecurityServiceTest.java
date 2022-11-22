@@ -33,7 +33,7 @@ public class SecurityServiceTest {
         securityService = new SecurityService(securityRepository, imageService);
     }
 
-    // 1. If alarm is armed and a sensor becomes activated, put the system into pending alarm status.
+    // Test 1: If alarm is armed and a sensor becomes activated, put the system into pending alarm status.
     @ParameterizedTest
     @EnumSource(value = ArmingStatus.class, names = {"ARMED_HOME", "ARMED_AWAY"})
     public void pendingWhenAlarmArmedAndSensorActivated(ArmingStatus armingStatus) {
@@ -45,7 +45,7 @@ public class SecurityServiceTest {
         verify(securityRepository).setAlarmStatus(AlarmStatus.PENDING_ALARM);
     }
 
-    // 2. If alarm is armed and a sensor becomes activated and the system is already pending alarm,
+    // Test 2: If alarm is armed and a sensor becomes activated and the system is already pending alarm,
     // set the alarm status to alarm.
     @ParameterizedTest
     @EnumSource(value = ArmingStatus.class, names = {"ARMED_HOME", "ARMED_AWAY"})
@@ -57,7 +57,7 @@ public class SecurityServiceTest {
         verify(securityRepository).setAlarmStatus(AlarmStatus.ALARM);
     }
 
-    // 3. If pending alarm and all sensors are inactive, return to no alarm state.
+    // Test 3: If pending alarm and all sensors are inactive, return to no alarm state.
     @Test
     public void noAlarmWhenPendingAlarmAndAllSensorsInactive() {
         when(securityRepository.getAlarmStatus()).thenReturn(AlarmStatus.PENDING_ALARM);
