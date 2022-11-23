@@ -23,10 +23,20 @@ public class SecurityService {
     private ImageService imageService;
     private SecurityRepository securityRepository;
     private Set<StatusListener> statusListeners = new HashSet<>();
+    private boolean catDetected;
 
     public SecurityService(SecurityRepository securityRepository, ImageService imageService) {
         this.securityRepository = securityRepository;
         this.imageService = imageService;
+    }
+
+    private boolean allSensorsInactive() {
+        return getSensors().stream().noneMatch(Sensor::getActive);
+    }
+
+    private void resetAllSensors() {
+        Set<Sensor> sensors = getSensors().stream().peek(s -> s.setActive(false)).collect(Collectors.toSet());
+        sensors.forEach(s -> securityRepository.updateSensor(s));
     }
 
     /**
@@ -35,10 +45,17 @@ public class SecurityService {
      * @param armingStatus
      */
     public void setArmingStatus(ArmingStatus armingStatus) {
-        if(armingStatus == ArmingStatus.DISARMED) {
+        if (catDetected && armingStatus == ArmingStatus.ARMED_HOME) {
+            setAlarmStatus(AlarmStatus.ALARM);
+        }
+        if (armingStatus == ArmingStatus.DISARMED) {
             setAlarmStatus(AlarmStatus.NO_ALARM);
         }
+        if (armingStatus == ArmingStatus.ARMED_HOME || armingStatus == ArmingStatus.ARMED_AWAY) {
+            resetAllSensors();
+        }
         securityRepository.setArmingStatus(armingStatus);
+        statusListeners.forEach(StatusListener::sensorStatusChanged);
     }
 
     /**
@@ -47,12 +64,12 @@ public class SecurityService {
      * @param cat True if a cat is detected, otherwise false.
      */
     private void catDetected(Boolean cat) {
-        if(cat && getArmingStatus() == ArmingStatus.ARMED_HOME) {
+        catDetected = cat;
+        if (cat && getArmingStatus() == ArmingStatus.ARMED_HOME) {
             setAlarmStatus(AlarmStatus.ALARM);
-        } else {
+        } else if (!cat && allSensorsInactive()) {
             setAlarmStatus(AlarmStatus.NO_ALARM);
         }
-
         statusListeners.forEach(sl -> sl.catDetected(cat));
     }
 
