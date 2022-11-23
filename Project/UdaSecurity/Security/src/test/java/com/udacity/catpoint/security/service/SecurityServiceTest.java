@@ -66,7 +66,7 @@ public class SecurityServiceTest {
         verify(securityRepository).setAlarmStatus(AlarmStatus.NO_ALARM);
     }
 
-    // 4. If alarm is active, change in sensor state should not affect the alarm state.
+    // Test 4: If alarm is active, change in sensor state should not affect the alarm state.
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
     public void alarmStatusNotChangedWhenAlarmActiveIfSensorDeactivated(boolean sensorActive) {
@@ -77,7 +77,7 @@ public class SecurityServiceTest {
         verify(securityRepository, never()).setAlarmStatus(any(AlarmStatus.class));
     }
 
-    // 5. If a sensor is activated while already active and the system is in pending state,
+    // Test 5: If a sensor is activated while already active and the system is in pending state,
     // change it to alarm state.
     @Test
     public void alarmWhenSensorActivatedAndStatusPending() {
@@ -88,7 +88,7 @@ public class SecurityServiceTest {
         verify(securityRepository).setAlarmStatus(AlarmStatus.ALARM);
     }
 
-    // 6. If a sensor is deactivated while already inactive, make no changes to the alarm state.
+    // Test 6: If a sensor is deactivated while already inactive, make no changes to the alarm state.
     @Test
     public void noAlarmStateChangeWhenSensorDeactivatedAndStatusPending() {
         Sensor sensor = new Sensor("sensor", SensorType.DOOR);
@@ -97,9 +97,8 @@ public class SecurityServiceTest {
         verify(securityRepository, never()).setAlarmStatus(any(AlarmStatus.class));
     }
 
-    // 7. If the image service identifies an image containing a cat while the system is armed-home,
+    // Test 7: If the image service identifies an image containing a cat while the system is armed-home,
     // put the system into alarm status.
-    // Test case 7 is about having the house armed and then getting an image of cat.
     @Test
     public void alarmWhenImageServiceIdentifiesCat() {
         when(securityRepository.getArmingStatus()).thenReturn(ArmingStatus.ARMED_HOME);
@@ -109,7 +108,7 @@ public class SecurityServiceTest {
         verify(securityRepository).setAlarmStatus(AlarmStatus.ALARM);
     }
 
-    // 8. If the image service identifies an image that does not contain a cat,
+    // Test 8: If the image service identifies an image that does not contain a cat,
     // change the status to no alarm as long as the sensors are not active.
     @Test
     public void noAlarmWhenImageServiceIdentifiesNoCat() {
@@ -119,14 +118,14 @@ public class SecurityServiceTest {
         verify(securityRepository).setAlarmStatus(AlarmStatus.NO_ALARM);
     }
 
-    // 9. If the system is disarmed, set the status to no alarm.
+    // Test 9: If the system is disarmed, set the status to no alarm.
     @Test
     public void noAlarmWhenSystemDisarmed() {
         securityService.setArmingStatus((ArmingStatus.DISARMED));
         verify(securityRepository).setAlarmStatus(AlarmStatus.NO_ALARM);
     }
 
-    // 10. If the system is armed, reset all sensors to inactive.
+    // Test 10: If the system is armed, reset all sensors to inactive.
     @ParameterizedTest
     @EnumSource(value = ArmingStatus.class, names = {"ARMED_HOME", "ARMED_AWAY"})
     public void resetSensorsWhenSystemArmed(ArmingStatus armingStatus) {
@@ -143,9 +142,8 @@ public class SecurityServiceTest {
     }
 
 
-    // 11. If the system is armed-home while the camera shows a cat, set the alarm status to alarm.
-    // Test case 11 is about having the house unarmed first, getting an image of cat and then if you
-    // put it on armed again, the alarm should go on.
+    // Test 11: If the system is armed-home while the camera shows a cat,
+    // set the alarm status to alarm.
     @Test
     public void alarmWhenCameraShowsCat() {
         when(securityRepository.getArmingStatus()).thenReturn(ArmingStatus.DISARMED);
