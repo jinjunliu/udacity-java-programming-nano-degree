@@ -58,6 +58,7 @@ public class SecurityServiceTest {
         securityService.setArmingStatus(armingStatus);
         sensor.setSensorType(sensorType);
         sensor.setActive(false);
+        when(securityRepository.getSensors()).thenReturn(Set.of(sensor));
         // reference: https://stackoverflow.com/questions/45222786/mockito-when-thenreturn
         when(securityRepository.getAlarmStatus()).thenReturn(AlarmStatus.NO_ALARM);
         securityService.changeSensorActivationStatus(sensor, true);
