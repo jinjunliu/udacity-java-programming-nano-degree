@@ -50,8 +50,8 @@ public class SecurityServiceTest {
     }
 
     // 1. If alarm is armed and a sensor becomes activated, put the system into pending alarm status.
-    @ParameterizedTest
     // Reference: https://www.baeldung.com/parameterized-tests-junit-5
+    @ParameterizedTest
     @MethodSource("provideTest1and2Arguments")
     public void test1(ArmingStatus armingStatus, SensorType sensorType) {
         // reference: https://stackoverflow.com/questions/45222786/mockito-when-thenreturn
