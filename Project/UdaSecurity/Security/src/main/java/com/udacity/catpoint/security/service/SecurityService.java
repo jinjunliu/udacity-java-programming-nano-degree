@@ -10,7 +10,6 @@ import com.udacity.catpoint.security.data.Sensor;
 import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Service that receives information about changes to the security system. Responsible for
@@ -24,6 +23,7 @@ public class SecurityService {
     private ImageService imageService;
     private SecurityRepository securityRepository;
     private Set<StatusListener> statusListeners = new HashSet<>();
+    private boolean catDetectedStatus = false;
 
     public SecurityService(SecurityRepository securityRepository, ImageService imageService) {
         this.securityRepository = securityRepository;
@@ -36,8 +36,15 @@ public class SecurityService {
      * @param armingStatus
      */
     public void setArmingStatus(ArmingStatus armingStatus) {
+        // to pass test11: If the system is armed-home while the camera shows a cat, set the alarm status to alarm.
+        if (catDetectedStatus && armingStatus == ArmingStatus.ARMED_HOME) {
+            setAlarmStatus(AlarmStatus.ALARM);
+        }
         if(armingStatus == ArmingStatus.DISARMED) {
             setAlarmStatus(AlarmStatus.NO_ALARM);
+        } else {
+            // to pass test 10: when armed, reset all sensors to inactive
+            securityRepository.getSensors().forEach(s -> s.setActive(false));
         }
         securityRepository.setArmingStatus(armingStatus);
     }
@@ -53,7 +60,8 @@ public class SecurityService {
         } else {
             setAlarmStatus(AlarmStatus.NO_ALARM);
         }
-
+        // save the cat status for the camera
+        catDetectedStatus = cat;
         statusListeners.forEach(sl -> sl.catDetected(cat));
     }
 
@@ -97,7 +105,8 @@ public class SecurityService {
     private void handleSensorDeactivated() {
         switch(securityRepository.getAlarmStatus()) {
             case PENDING_ALARM -> setAlarmStatus(AlarmStatus.NO_ALARM);
-            case ALARM -> setAlarmStatus(AlarmStatus.PENDING_ALARM);
+            // comment the following line to pass test4
+            // case ALARM -> setAlarmStatus(AlarmStatus.PENDING_ALARM);
         }
     }
 
@@ -111,6 +120,17 @@ public class SecurityService {
             handleSensorActivated();
         } else if (sensor.getActive() && !active) {
             handleSensorDeactivated();
+        }
+        if (!active) {
+            // to pass test3: If pending alarm and all sensors are inactive, return to no alarm state.
+            boolean ifAllSensorsInactive = securityRepository.getSensors().stream().noneMatch(Sensor::getActive);
+            if (getAlarmStatus() == AlarmStatus.PENDING_ALARM && ifAllSensorsInactive) {
+                setAlarmStatus(AlarmStatus.NO_ALARM);
+            }
+        }
+        // to pass test5: If a sensor is activated while already active and the system is in pending state, change it to alarm state.
+        if (active && sensor.getActive() && getAlarmStatus() == AlarmStatus.PENDING_ALARM) {
+            setAlarmStatus(AlarmStatus.ALARM);
         }
         sensor.setActive(active);
         securityRepository.updateSensor(sensor);
