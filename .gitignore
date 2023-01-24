@@ -23,3 +23,6 @@ tinyJRE
 
 # target directory
 target
+
+# zip file
+*.zip
