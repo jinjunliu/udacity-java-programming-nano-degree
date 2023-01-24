@@ -6,7 +6,11 @@ This repo includes my excercises and projects while taking [Udacity's Java Progr
 * Project - this directory includes the three projects: 
     - [Hotel Reservation Application](Project/hotelReservation);
     - [Web Crawler](Project/webCrawler);
-    - UdaSecurity.
+    - [UdaSecurity](Project/UdaSecurity).
 
 ## Running Environment
 JDK 18.
+
+## Update
+
+Whoo~ I got my [certificate](https://confirm.udacity.com/9UKKPXHP)!
