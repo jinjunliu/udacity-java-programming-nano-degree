@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.awt.image.BufferedImage;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.*;
 
@@ -55,11 +54,10 @@ public class SecurityServiceTest {
     // Reference: https://www.baeldung.com/parameterized-tests-junit-5
     @MethodSource("provideTest1and2Arguments")
     public void test1(ArmingStatus armingStatus, SensorType sensorType) {
-        securityService.setArmingStatus(armingStatus);
+        // reference: https://stackoverflow.com/questions/45222786/mockito-when-thenreturn
+        when(securityRepository.getArmingStatus()).thenReturn(armingStatus);
         sensor.setSensorType(sensorType);
         sensor.setActive(false);
-        when(securityRepository.getSensors()).thenReturn(Set.of(sensor));
-        // reference: https://stackoverflow.com/questions/45222786/mockito-when-thenreturn
         when(securityRepository.getAlarmStatus()).thenReturn(AlarmStatus.NO_ALARM);
         securityService.changeSensorActivationStatus(sensor, true);
         // reference: https://www.digitalocean.com/community/tutorials/mockito-verify
@@ -81,7 +79,7 @@ public class SecurityServiceTest {
     @ParameterizedTest
     @MethodSource("provideTest1and2Arguments")
     public void test2(ArmingStatus armingStatus, SensorType sensorType) {
-        securityService.setArmingStatus(armingStatus);
+        when(securityRepository.getArmingStatus()).thenReturn(armingStatus);
         sensor.setSensorType(sensorType);
         sensor.setActive(false);
         when(securityRepository.getAlarmStatus()).thenReturn(AlarmStatus.PENDING_ALARM);
@@ -95,7 +93,6 @@ public class SecurityServiceTest {
     public void test3(SensorType sensorType) {
         when(securityRepository.getAlarmStatus()).thenReturn(AlarmStatus.PENDING_ALARM);
         sensor.setSensorType(sensorType);
-        when(securityRepository.getSensors()).thenReturn(Set.of(sensor));
         sensor.setActive(false);
         securityService.changeSensorActivationStatus(sensor, false);
         verify(securityRepository).setAlarmStatus(AlarmStatus.NO_ALARM);
